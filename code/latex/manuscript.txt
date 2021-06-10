@@ -1,0 +1,106 @@
+\documentclass[11pt]{article}
+
+\usepackage{color}
+\definecolor{linkcolor}{rgb}{0.15, 0.15, 0.3}
+\definecolor{demphasize}{rgb}{0.5, 0.5, 0.5}
+
+ \usepackage{geometry}
+ \geometry{
+ a4paper,
+ left=20mm,
+ top=16mm,
+ bottom=16mm,
+right=20mm}
+
+\usepackage{graphicx}
+
+\begin{document}
+
+Measured Stress - is this working?
+
+\section{Introduction}
+
+\section{Analysis}
+
+Two studies measured the effectiveness of virtual reality to distract patients from painful procedures.
+
+\subsection{}
+
+\subsection{Phase 1: Clean the data}
+
+Analysis for both studies begin the same: list all records in the study, add timestamps to the measurements, and then find the end of the patient's data (the wearable could have been removed from the patient before turning off, adding superfluous data to the record, which is trimmed off).
+
+\begin{enumerate}
+\item List all records
+\item Add timestamp to each sensor log for each record
+\item Find the end of the record using skin temperature
+\end{enumerate}
+
+The deliverable for the end of this phase is a count of the records, total number of measurements, and a csv with metadata for future reference.
+
+Then, if the study used two wearables to measure both the left and right wrist, then the left and right wrist must be coregistered.
+
+\begin{enumerate}
+\item For each coregistered record, find the shared beginning and end unix time.
+\item Truncate the records
+\item Combine the records for the left and right wrist in a single file
+\end{enumerate}
+
+
+\section{References}
+
+\section{Appendix I. Clean Data}
+
+The wearable logs measurements as long as it is turned on.
+During this phase, we imagine possible scenarios that would cause the record to include non-patient specific data and then scrub those records from the measurements.
+
+\begin{enumerate}
+\item Wearable turned on, but not used for the study. In this case, any records shorter than~15 minutes were not included in the analysis.
+\item Wearable left on after being removed from the participant
+\item Wearable turned on before being adorned by the participant
+\item Wearable left on between participants, logging two participants in a single folder
+\end{enumerate}
+
+The wearable logs data until it is turned off, so the record may include non-patient data.
+The temperature sensor is the most predictable.
+When the temperature drops rapidly near the expected end of the session, the patient-specific data is considered concluded.
+
+
+\subsection{What is BVP?}
+
+BVP is measured using a photoplethysmograph, whose optical measurements are used to make a plethsmogram that can be used to detect blood volume changes.
+Each cardiac signal produces a spike.
+
+\subsection{ info.txt from wearables}
+.csv files in this archive are in the following format:
+The first row is the initial time of the session expressed as unix timestamp in UTC.
+The second row is the sample rate expressed in Hz.
+
+TEMP.csv
+Data from temperature sensor expressed degrees on the Celsius (°C) scale.
+
+EDA.csv
+Data from the electrodermal activity sensor expressed as microsiemens (μS).
+
+BVP.csv
+Data from photoplethysmograph.
+
+ACC.csv
+Data from 3-axis accelerometer sensor. The accelerometer is configured to measure acceleration in the range [-2g, 2g]. Therefore the unit in this file is 1/64g.
+Data from x, y, and z axis are respectively in first, second, and third column.
+
+IBI.csv
+Time between individuals heart beats extracted from the BVP signal.
+No sample rate is needed for this file.
+The first column is the time (respect to the initial time) of the detected inter-beat interval expressed in seconds (s).
+The second column is the duration in seconds (s) of the detected inter-beat interval (i.e., the distance in seconds from the previous beat).
+
+HR.csv
+Average heart rate extracted from the BVP signal.The first row is the initial time of the session expressed as unix timestamp in UTC.
+The second row is the sample rate expressed in Hz.
+
+
+tags.csv
+Event mark times.
+Each row corresponds to a physical button press on the device; the same time as the status LED is first illuminated.
+The time is expressed as a unix timestamp in UTC and it is synchronized with initial time of the session indicated in the related data files from the corresponding session.

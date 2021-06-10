@@ -1,0 +1,29 @@
+valueName, valueList
+study_list, HI PMR
+sensor_list, ACC BVP EDA HR TEMP 
+sensor_unit_list, m/s2 BVP uSiemens 1/s degC
+max_record_time, 100
+min_record_time, 12
+trimBegin, 0.1
+analysis_list, timestamp truncate
+format_types, source truncate
+color_source, 0.8 0.8 0.8
+color_truncate, 0.7 0.7 0.7
+color_coregister, 0.6 0.6 0.6
+color_clean, 0.5 0.5 0.5
+color_ACC_xMeas, 0.9 0 0.7
+color_ACC_yMeas, 0.7 0 0.9
+color_ACC_zMeas, 0.9 0.7 0.9
+color_ACC_measurement, 0.7 0.7 0.7
+color_truncate_ACC_measurement, 0.7 0.8 0.9
+segment_list, PreStudy Study PostStudy All
+timePreStudy, 5
+timePostStudy, 20
+color_PreStudy, .9 .5 .5
+color_Study, .7 .9 .7
+color_PostStudy, .2 .2 .9
+color_All, .8 0 .6
+color_modifier_wearable_1, 1
+color_modifier_wearable_2, 0.5
+degree_list, 0 1 2 3 4 5 6
+searchRange, 15 30 60 90 120
